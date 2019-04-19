@@ -94,7 +94,9 @@
           if(res.data.code==200){
             Toast({message: res.data.message, position: top, duration: 3000})
             localStorage.setItem("loginInfo", JSON.stringify(res.data.data));
-            this.$router.push({path:'/'})
+            this.$router.push({path:'/'});
+            // this.$router.go(0);
+              // window.location.reload()
           }else{
             Toast({message: res.data.message, position: top, duration: 3000})
             return

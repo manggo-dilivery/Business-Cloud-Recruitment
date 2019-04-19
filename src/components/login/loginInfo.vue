@@ -83,6 +83,7 @@
         item3:'',
         item4:'',
         info:{},
+          ip:'',
         companyTarget:'',
         slot1:[
           {flex: 1, values: ['房地产', '看电影', '玩游戏'], className: 'slot1', textAlign: 'center'}
@@ -94,7 +95,8 @@
       }
     },
     created(){
-      this.info = JSON.parse(window.sessionStorage.getItem('loginInfo'));
+        this.ip = this.imageUri;
+      this.info = JSON.parse(window.localStorage.getItem('loginInfo'));
       let companyTarget = JSON.parse(window.localStorage.getItem('companyTarget'))||[];
       this.companyTarget = companyTarget.join(',')
     },
@@ -122,7 +124,7 @@
         this.$axios.post('/business/upload',param,config)
           .then(res=>{
             Toast({message:res.data.message, position:top, duration:3000})
-            this.imgUrl = 'http://13.231.212.214/business/image?image='+res.data.data
+            this.imgUrl = this.ip+'/business/image?image='+res.data.data
           })
       },
       doRegist(){
@@ -139,7 +141,7 @@
         var that = this;
         this._$.ajax({
           type:"POST",
-          url:"http://13.231.212.214/business/user/update/"+info.uid,
+          url:this.ip+"/business/user/update/"+info.uid,
           data:{'businessScope':this.item3,
                 'goal':this.companyTarget,"intro":this.item2,"position":this.item1},
           contentType: 'application/x-www-form-urlencoded;charset=utf-8',
@@ -147,6 +149,7 @@
             if(res.code==200){
                   Toast({message:res.message, position:top, duration:3000});
                   that.$router.push({path:'/center'})
+                // that.$router.go(0)
                 }else{
                   Toast({message:res.message, position:top, duration:3000});
                   return

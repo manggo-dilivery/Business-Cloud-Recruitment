@@ -53,10 +53,12 @@
         job2:[],
         slot1: [],
         slot2: [],
-        imgUrl:''
+        imgUrl:'',
+          ip:''
       }
     },
     created(){
+        this.ip = this.imageUri;
       let hobbit1 = [];
       let hobbit2 = [];
       let job1 = [];
@@ -126,7 +128,7 @@
           .then(res=>{
             console.log(res)
             Toast({message:res.data.message, position:top, duration:3000})
-            this.imgUrl = 'http://13.231.212.214/business/image?image='+res.data.data
+            this.imgUrl = this.ip+'/business/image?image='+res.data.data
           })
       },
       doRegister(){
@@ -137,7 +139,7 @@
           console.log(res);
           if(res.data.code==200){
             Toast({message:res.data.message, position:top, duration:3000});
-            sessionStorage.setItem("loginInfo", JSON.stringify(res.data.data));
+            localStorage.setItem("loginInfo", JSON.stringify(res.data.data));
             this.$router.push({path:'/'})
           }else{
             Toast({message:res.data.message, position:top, duration:3000});

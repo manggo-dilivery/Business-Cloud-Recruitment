@@ -1,107 +1,145 @@
 <template>
     <div class="container">
         <mt-header fixed title="联系人">
-            <img id="search" slot="left" src="@/static/image/chat/search.png" alt="">
-            <img id="add" slot="right" @click="option" src="@/static/image/chat/add.png" alt="">
+            <!--<img id="search" slot="left" src="@/static/image/chat/search.png" alt="">-->
+            <img id="add" slot="right" @click.stop="showOption=!showOption" src="@/static/image/chat/add.png" alt="">
         </mt-header>
-        <div class="option" v-show="showOption">
-            <div class="optionItem">
-                <img src="@/static/image/chat/addPeople.png" alt="">
-                <p>添加好友</p>
+        <mu-fade-transition>
+            <div class="option" v-show="showOption"  v-click-outside="clickoutside">
+                <router-link :to="{name:'addFriend'}">
+                    <div class="optionItem">
+                        <img src="@/static/image/chat/addPeople.png" alt="">
+                        <p>添加好友</p>
+                    </div>
+                </router-link>
+                <router-link :to="{name:'recommend'}">
+                    <div class="optionItem" style="border-bottom: none">
+                        <img style="width:17px;height: 8.5px;" src="@/static/image/chat/recommend.png" alt="">
+                        <p>推荐</p>
+                    </div>
+                </router-link>
             </div>
-            <div class="optionItem">
-                <img src="@/static/image/chat/scan.png" alt="">
-                <p>扫一扫</p>
+        </mu-fade-transition>
+        <div class="topEvent">
+            <div class="topItem" @click="toBlackList">
+                <img src="@/static/image/chat/invite.png" alt="">
+                <p>黑名单</p>
             </div>
-            <div class="optionItem">
-                <img src="@/static/image/chat/conversation.png" alt="">
-                <p>发起聊天</p>
-            </div>
-            <div class="optionItem" style="border-bottom: none">
-                <img style="width:17px;height: 8.5px;" src="@/static/image/chat/recommend.png" alt="">
-                <p>推荐</p>
-            </div>
+            <router-link :to="{ name:'group' }">
+                <div class="topItem">
+                    <img src="@/static/image/chat/groupChat.png" alt="">
+                    <p>群聊</p>
+                </div>
+            </router-link>
         </div>
         <div class="friendList">
             <mt-index-list :show-indicator="false">
-                <mt-index-section index="">
-                    <div class="topEvent">
-                        <div class="topItem" style="margin-top:25px">
-                            <img src="@/static/image/chat/newFriend.png" alt="">
-                            <p>新的朋友</p>
-                        </div>
-                        <div class="topItem">
-                            <img src="@/static/image/chat/invite.png" alt="">
-                            <p>邀请新朋友</p>
-                        </div>
-                        <div class="topItem">
-                            <img src="@/static/image/chat/groupChat.png" alt="">
-                            <p>群聊</p>
-                        </div>
-                    </div>
-                </mt-index-section>
-                <mt-index-section index="A">
-                    <friend showInput="false"></friend>
-                </mt-index-section>
-                <mt-index-section index="B">
-                    <friend showInput="false"></friend>
-                </mt-index-section>
+                <div v-for="(item,index) in list">
+                    <mt-index-section :index="index">
+                        <friend showInput="false" :info="item"></friend>
+                    </mt-index-section>
+                </div>
             </mt-index-list>
         </div>
-    <searchMan></searchMan>
+        <!--<searchMan></searchMan>-->
     </div>
 </template>
 
 <script>
-  export default {
-    name: "linkman",
-    data(){
-      return{
-        showOption:false,
-        num:0
-      }
-    },
-    methods:{
-      option(){
-        let num = this.num;
-        if(num%2==0){
-          this.showOption = true
-          this.num++
-        }else{
-          this.showOption = false
-          this.num++
+    import HanziToPinyin from "../../api/py";
+    import {mapState} from 'vuex'
+    export default {
+        name: "linkman",
+        data(){
+            return{
+                showOption:false,
+                list:null,
+                ip:''
+            }
+        },
+        computed:{
+            ...mapState([
+                'userInfo'
+            ])
+        },
+        mounted(){
+            this.ip = this.imageUri
+            this.req();
+        },
+        methods:{
+            toBlackList(){
+                this.$router.push({name:'blackList'})
+            },
+            clickoutside(){
+                this.showOption = false
+            },
+            req(){
+                this.$axios.get('/business/friends/user/'+this.userInfo.im+'/page?page=1&size=1000').then(res=>{
+                    console.log(res.data.data);
+                    // let hanZi = "Ads";
+                    // console.log("输出首字母"+HanziToPinyin.instance.initialTreatment(hanZi));
+                    let arr = res.data.data.list;
+                    let list = {};
+                    let obj = {};
+                    let word;
+                    console.log(arr)
+                    for(let i in arr){
+                        word = HanziToPinyin.instance.initialTreatment(arr[i].username).toUpperCase();
+                        if(obj[word]){
+                            list[word].push({name:arr[i].username,im:arr[i].im, telephone:arr[i].telephone,
+                                companyName:arr[i].companyName,avatar:this.ip+'/business/image?image='+arr[i].avatar,
+                                email:arr[i.email],});
+                        }else{
+                            list[word] = [{name:arr[i].username,im:arr[i].im, telephone:arr[i].telephone,
+                                companyName:arr[i].companyName,avatar:this.ip+'/business/image?image='+arr[i].avatar,
+                                email:arr[i.email],}];
+                            obj[word] = word;
+                        }
+                    }
+                    this.list = list;
+                    console.log(list)
+                })
+            }
         }
-      }
     }
-  }
 </script>
 
 <style scoped>
+    a {
+        text-decoration: none;
+        color:#333
+    }
+    .router-link-active {
+        text-decoration: none;
+    }
     .container{
-
+        height:100%;
+        padding: 40px 0 60px 0;
     }
     .topEvent{
 
     }
     .topItem{
-        padding: 10px 0;
+        padding: 8px 0;
         display: flex;
         align-items: center;
-        width:100%;
+        width:calc(100% - 21px);
+        margin:0 auto;
         border-bottom:1px solid #ddd;
+        /*border-right:1px solid #ddd;*/
     }
     .topItem img{
-        width:40px;
-        height: 40px;
+        width:36px;
+        height: 36px;
         margin-left:20px;
     }
     .topItem p{
-        font-size:17px;
+        font-size:16px;
         margin-left:10px;
         letter-spacing: 1px;
     }
     .friendList{
-        overflow-y:scroll ;
+
     }
     #search{
         width:20px;
@@ -117,8 +155,9 @@
         width:140px;
         top:46px;
         right:6px;
-        background: rgba(0,0,0,0.6);
+        background: rgba(63,68,71,0.9);
         z-index:10;
+        border-radius:5px;
     }
     .optionItem{
         display: flex;
@@ -139,4 +178,5 @@
         letter-spacing: 1px;
         font-size:14px;
     }
+
 </style>

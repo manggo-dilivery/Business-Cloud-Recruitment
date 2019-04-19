@@ -1,12 +1,12 @@
 <template>
     <div class="linkItem">
-        <div class="item">
+        <div class="item" v-for="item in info" @click="nav(item.companyName,item)">
             <input v-if="false" class="checkRadio" type="checkbox">
-            <img class="portrait" src="@/static/image/chat/groupChat.png" alt="">
+            <img class="portrait" :src="item.avatar" alt="">
             <div class="text">
-                <p>英特尔中国<img class="vip" src="@/static/image/chat/v1.png"></p>
-                <p>主营范围：半导体，处理器，电脑</p>
-                <p>微处理器<img class="vip" src="@/static/image/chat/v1.png"></p>
+                <p>{{item.name}}<img class="vip" src="@/static/image/chat/v1.png"></p>
+                <p>{{item.content||'暂无'}}</p>
+                <p>{{item.content||'暂无'}}<img class="vip" src="@/static/image/chat/v1.png"></p>
             </div>
         </div>
     </div>
@@ -15,7 +15,13 @@
 <script>
     export default {
         name: "friend",
-        props:["showInput"]
+        props:["info"],
+        methods:{
+            nav(companyName,friendInfo){
+                companyName?this.$router.push({name:'companyPage',query:{friendInfo:friendInfo}}):this.$router.push({name:'personPage',query:{friendInfo:friendInfo}})
+                this.$store.dispatch('setFriendinfo',friendInfo)
+            },
+        }
     }
 </script>
 
@@ -49,6 +55,7 @@
     .linkItem{
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
     }
     .item{
         display: flex;

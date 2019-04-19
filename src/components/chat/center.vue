@@ -4,11 +4,13 @@
             <img src="@/static/image/chat/centerbg.png" alt="">
             <div class="userInfo">
                 <div class="setting">
-                    <img src="@/static/image/chat/setting.png" alt="">
+                    <router-link :to="{name:'setting'}">
+                        <img src="@/static/image/chat/setting.png" alt="">
+                    </router-link>
                     <img src="@/static/image/chat/code.png" alt="">
                 </div>
                 <div class="userItem">
-                    <img src="@/static/image/chat/portrait.jpeg" alt="">
+                    <img :src="this.ip+'/business/image?image='+this.info.portrait" alt="">
                     <div class="userItemDiv">
                         <div>
                             <p>用户A</p>
@@ -27,70 +29,76 @@
                 <p>我的收藏</p>
             </div>
             <span style="width:1px;height: 22px;border-right: 1px solid #fff;"></span>
-            <div class="colItem">
+            <div class="colItem" @click='goToPay'>
                 <img src="@/static/image/chat/money.png" alt="">
                 <p>我的余额</p>
             </div>
         </div>
         <div class="list">
-            <div class="item" @click="fillInfo">
+            <!--<div class="item" @click="fillInfo">-->
+                <!--<div class="itemLeft">-->
+                    <!--<img src="@/static/image/chat/home.png" alt="">-->
+                    <!--<p>完善信息</p>-->
+                <!--</div>-->
+                <!--<div class="itemRight">-->
+                    <!--<img src="@/static/image/chat/iconRight.png" alt="">-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="item" @click="goal">
                 <div class="itemLeft">
                     <img src="@/static/image/chat/home.png" alt="">
-                    <p>完善信息</p>
+                    <p>{{chooseGoal}}</p>
                 </div>
                 <div class="itemRight">
                     <img src="@/static/image/chat/iconRight.png" alt="">
                 </div>
             </div>
-            <div class="item">
-                <div class="itemLeft">
-                    <img src="@/static/image/chat/home.png" alt="">
-                    <p>个人主页</p>
+            <router-link :to="{name:'personPage2'}">
+                <div class="item">
+                    <div class="itemLeft">
+                        <img src="@/static/image/chat/link.png" alt="">
+                        <p>个人主页</p>
+                    </div>
+                    <div class="itemRight">
+                        <!--<p>IT/互联网，产品设计带带</p>-->
+                        <img src="@/static/image/chat/iconRight.png" alt="">
+                    </div>
                 </div>
-                <div class="itemRight">
-                    <img src="@/static/image/chat/iconRight.png" alt="">
+            </router-link>
+            <router-link :to="{name:'companyPage'}">
+                <div class="item">
+                    <div class="itemLeft">
+                        <img src="@/static/image/chat/link.png" alt="">
+                        <p>公司主页</p>
+                    </div>
+                    <div class="itemRight">
+                        <!--<p>IT/互联网，产品设计带带</p>-->
+                        <img src="@/static/image/chat/iconRight.png" alt="">
+                    </div>
                 </div>
-            </div>
-            <div class="item">
-                <div class="itemLeft">
-                    <img src="@/static/image/chat/link.png" alt="">
-                    <p>职业标签</p>
+            </router-link>
+            <router-link :to="{name:'intrest'}">
+                <div class="item">
+                    <div class="itemLeft">
+                        <img src="@/static/image/chat/hobbit.png" alt="">
+                        <p>兴趣爱好</p>
+                    </div>
+                    <div class="itemRight">
+                        <p>{{hobby}}</p>
+                        <img src="@/static/image/chat/iconRight.png" alt="">
+                    </div>
                 </div>
-                <div class="itemRight">
-                    <p>IT/互联网，产品设计带带</p>
-                    <img src="@/static/image/chat/iconRight.png" alt="">
-                </div>
-            </div>
-            <div class="item">
-                <div class="itemLeft">
-                    <img src="@/static/image/chat/jieshao.png" alt="">
-                    <p>个人简介</p>
-                </div>
-                <div class="itemRight">
-                    <p>我是一个好人，射手座小男生</p>
-                    <img src="@/static/image/chat/iconRight.png" alt="">
-                </div>
-            </div>
-            <div class="item">
-                <div class="itemLeft">
-                    <img src="@/static/image/chat/hobbit.png" alt="">
-                    <p>兴趣爱好</p>
-                </div>
-                <div class="itemRight">
-                    <p>打篮球，羽毛球</p>
-                    <img src="@/static/image/chat/iconRight.png" alt="">
-                </div>
-            </div>
-            <div class="item">
-                <div class="itemLeft">
-                    <img src="@/static/image/chat/position.png" alt="">
-                    <p>所在地区</p>
-                </div>
-                <div class="itemRight">
-                    <p>江苏南京</p>
-                    <img src="@/static/image/chat/iconRight.png" alt="">
-                </div>
-            </div>
+            </router-link>
+            <!--<div class="item">-->
+                <!--<div class="itemLeft">-->
+                    <!--<img src="@/static/image/chat/position.png" alt="">-->
+                    <!--<p>所在地区</p>-->
+                <!--</div>-->
+                <!--<div class="itemRight">-->
+                    <!--<p>江苏南京</p>-->
+                    <!--<img src="@/static/image/chat/iconRight.png" alt="">-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
         <div style="margin-top:10px;background:#fff;width:100%">
             <div class="item" style="border-bottom: none">
@@ -121,9 +129,18 @@
         <div class="work">
             <div class="item">
                 <div class="itemLeft">
+                    <p>教育经历</p>
+                </div>
+                <div class="itemRight" @click="$router.push('/education')" style="cursor:pointer;">
+                    <p>添加教育经历</p>
+                    <img src="@/static/image/chat/iconRight.png" alt="">
+                </div>
+            </div>
+            <div class="item">
+                <div class="itemLeft">
                     <p>工作经历</p>
                 </div>
-                <div class="itemRight">
+                <div class="itemRight" @click="goToWork" style="cursor:pointer;">
                     <p>添加工作经历</p>
                     <img src="@/static/image/chat/iconRight.png" alt="">
                 </div>
@@ -133,19 +150,60 @@
 </template>
 
 <script>
-  export default {
-    name: "center",
-    methods:{
-      fillInfo(){
-        let info = JSON.parse(window.localStorage.getItem("loginInfo"))
-        if(info.type===0){
-          this.$router.push('/loginInfo2')
-        }else{
-          this.$router.push('/loginInfo')
+    import {MessageBox} from 'mint-ui'
+    export default {
+        name: "center",
+        data(){
+            return{
+                info:{},
+                chooseGoal:'',
+                ip:'',
+                hobby:''
+            }
+        },
+        mounted(){
+            this.info = JSON.parse(window.localStorage.getItem("loginInfo"));
+            this.ip = this.imageUri;
+            let data = JSON.parse(window.localStorage.getItem("intrest"))||[];
+            this.hobby = data.join();
+            if(this.info.type===0){
+                this.chooseGoal = '个人目标'
+            }else{
+                this.chooseGoal = '企业目标'
+            }
+        },
+        methods:{
+            exitLogin(){
+                MessageBox.confirm('确定退出登录?').then(action => {
+                    localStorage.removeItem('loginInfo');
+                    // window.location.reload();
+                    this.$router.push({path:'/registerOption'});
+                    // this.$destroy('ChatHome');
+                });
+
+            },
+            goal(){
+                if(this.info.type===0){
+                    this.$router.push('/companyTarget')
+                }else{
+                    this.$router.push('/companyTarget')
+                }
+            },
+            fillInfo(){
+                if(this.info.type===0){
+                    this.$router.push('/loginInfo2')
+                }else{
+                    this.$router.push('/loginInfo')
+                }
+            },
+            goToPay(){
+                this.$router.push('/globalpay')
+            },
+            goToWork(){
+                this.$router.push('/work')
+            }
         }
-      }
     }
-  }
 </script>
 
 <style scoped>

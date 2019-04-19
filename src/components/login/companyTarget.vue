@@ -1,14 +1,9 @@
 <template>
     <div class="container">
         <topNav></topNav>
-        <div class="search">
-            <img src="@/static/image/login/search.png" alt="">
-            <input v-model="searchVal" type="text" placeholder="搜索" @focus="showMark" @keyup.enter="doSearch">
-            <img id="cancel" @click="cancelMark" src="@/static/image/login/inputCancel.png" alt="">
-        </div>
         <div class="mark" v-show="currentIndex==1">
             <div class="markItem" v-for="item in markItem" @click="doTagSearch(item.context)">
-                <p>{{item.context}}</p>
+                <p>{{item.company}}</p>
                 <img src="@/static/image/login/add.png" alt="" @click="currentIndex=0">
             </div>
         </div>
@@ -30,7 +25,7 @@
             </div>
             <div class="listItem" id="tag">
                 <p v-for="(item,index) in info" @click="addTag(index)"
-                 class="listItemP">{{item.context}}</p>
+                 class="listItemP">{{item.company}}</p>
             </div>
             <div class="submit" @click="confirm">
                 <div class="doSubmit">提交</div>
@@ -58,8 +53,9 @@
         created(){
             let info = JSON.parse(window.localStorage.getItem('loginInfo'))
             //hobbit中的请求
-            this.$axios.get('/business/country/'+info.country+'/label/list/3/hot').then(res=>{
-                // console.log(res)
+            //     /business/country/45/label/list/3
+            this.$axios.get('/business/goals/list?uid='+info.uid+'&cid='+info.country).then(res=>{
+                console.log(res)
                 this.info = res.data.data
                 this.totalNum = res.data.data.length
             })
@@ -149,7 +145,7 @@
                 }
                 let info = this.info;
 
-                this.list.push(info[index].context)
+                this.list.push(info[index].company)
                 let arr = this.list;
                 //数组去重
                 let arr1 = [];

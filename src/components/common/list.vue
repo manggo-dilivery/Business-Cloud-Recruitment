@@ -1,23 +1,57 @@
 <template>
-    <div class="item">
-        <div class="left">
-            <img class="image" src="@/static/image/chat/intel.jpg" alt="">
-            <div class="itemContent">
-                <p>英特尔中国<img class="vip" src="@/static/image/chat/v1.png"></p>
-                <p>主营范围：半导体、处理器<img class="vip" src="@/static/image/chat/v1.png"></p>
+    <div>
+        <div class="item" v-for="(item,index) in info" :key="index">
+            <div class="left">
+                <img class="image" :src="ip+item.url" alt="">
+                <div class="itemContent">
+                    <p>{{item.title}}<img class="vip" src="@/static/image/chat/v1.png"></p>
+                    <p>{{item.content}}{{item.uid}}<img class="vip" src="@/static/image/chat/v1.png"></p>
+                </div>
             </div>
+            <p class="right" v-bind:class="item.send?'unshow':''" @click="addFriend(index)"> +好友</p>
+            <p class="right2" v-bind:class="item.send?'':'unshow'" @click="cancel(index)">已发送</p>
         </div>
-        <p class="right">+好友</p>
     </div>
 </template>
 
 <script>
     export default {
-        name: "list"
+        name: "list",
+        data(){
+            return{
+                send:true,
+                infoList:[],
+                ip:''
+            }
+        },
+        props:['info','im'],
+        mounted(){
+            // this.infoList = this.info
+            this.ip = this.imageUri;
+            console.log('info',this.info)
+        },
+        methods:{
+            addFriend(index){
+                console.log(this.info[index].im)
+                this.$axios.post('/business/friends/user/'+this.im+'/friend/'+this.info[index].im).then(res=>{
+                    console.log('res',res)
+                })
+                this.info[index].send = true;
+            },
+            cancel(index){
+                this.info[index].send = false;
+            }
+        },
     }
 </script>
 
 <style scoped>
+    .list{
+
+    }
+    .unshow{
+        display: none;
+    }
     .item{
         width:90%;
         margin:0 auto;
@@ -55,12 +89,25 @@
         margin-top:4px;
     }
     .right{
-        padding:2px 10px;
+        width:70px;
+        padding:2px 0 0 0;
         color:#0094ff;
         border:1px solid #0094ff;
         border-radius:14px;
         font-size:14px;
         letter-spacing: 1px;
+        text-align: center;
+    }
+    .right2{
+        width:70px;
+        padding:2px 0 0 0;
+        background: #0094ff;
+        color:#fff;
+        border:1px solid #0094ff;
+        border-radius:14px;
+        font-size:14px;
+        letter-spacing: 1px;
+        text-align: center;
     }
     .vip{
         width:15px;

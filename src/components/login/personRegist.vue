@@ -117,7 +117,7 @@ white-space: nowrap;text-align: right">{{place}}</p>
         let password = this.pswd;
         let email = this.email;
         let userName = this.name;
-        let code = this.code;
+        let code = this.invatationCode;
         let place = this.place;
         if(userName==''){
           Toast({message:"用户名不能为空", position:top, duration:3000});
@@ -136,12 +136,13 @@ white-space: nowrap;text-align: right">{{place}}</p>
           return
         };
         let countryId = this.findCountryId();
+        console.log(countryId)
         let info={'userName':userName,'password':password,'email':email,'code':code,'place':place}
-        // window.localStorage.setItem('personRegist',JSON.stringify(info))
-        // this.$router.push('/register2')
+        window.localStorage.setItem('personRegist',JSON.stringify(info))
+        this.$router.push('/register2')
         this.$axios.post('/business/pass/save?area='+info.place+'&email='+info.email+'&password='
           +info.password+'&pid=0&type=0&username='+info.userName+'&invitedCode='+info.code+
-          '&country='+countryId).then(res=>{
+          '&country='+countryId+'&nickname='+info.userName).then(res=>{
           console.log(res);
           if(res.data.code==200){
             Toast({message:res.data.message, position:top, duration:3000});
@@ -157,7 +158,6 @@ white-space: nowrap;text-align: right">{{place}}</p>
         let index = this.countryIndex;
         let countryId = jsonData.data[index].did;
         return countryId;
-        // console.log(countryId)
       },
       picker(){
         this.showPicker = true;
@@ -180,6 +180,7 @@ white-space: nowrap;text-align: right">{{place}}</p>
           for(let n in city1){
             if(city1[n]==values[1]){
               picker.setSlotValues(2,district[i][n])
+                // this.countryIndex = [i,n];
               return
             }
           }

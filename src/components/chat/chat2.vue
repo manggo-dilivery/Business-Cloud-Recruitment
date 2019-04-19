@@ -5,7 +5,7 @@
             <div style="width:0;height: 50px;"></div>
             <div class="xw-chat-wrap">
                 <ul>
-                    <li v-for="item in messageData[to_username]">
+                    <li v-for="item in messageData2">
                         <div v-if="from_username !== item.from">
                             <!--<div class="xw-chat-time">{{messageList.time}}</div>-->
                             <div class="xw-chat-servicer">
@@ -100,13 +100,15 @@
                 emojiLength:'',
                 friendInfo:{},
                 userInfo:{},
-                ip:''
+                ip:'',
+                messageData2:{}
             }
         },
         mounted(){
-            console.log('query',this.$route.query);
             this.ip=this.imageUri;
-            let query = this.$route.query.info;
+            let query = JSON.parse(this.$route.params.id);
+
+            console.log('query',query)
             this.friendInfo = query;
             var text = document.getElementById("textarea");
             this.flexHeight(text)
@@ -116,7 +118,9 @@
             // if(chatData[query.from]){ this.chatHistory = chatData[query.from]}
 
             this.from_username = userInfo.im;
+            console.log('userInfo',query)
             this.to_username = query.im;
+            this.messageData2 = this.messageData[query.im]
             this.password = userInfo.password;
             this.token = userInfo.token;
             // this.receiveNickName = decodeURI(urlParams.to_nickname)
@@ -135,9 +139,14 @@
             ]),
         },
         watch:{
-            messageData(newVal,oldVal){
-                console.log(oldVal)
-                console.log(newVal)
+            '$route' (to, from) {
+                // 对路由变化作出响应...
+                let friendInfo = JSON.parse(to.params.id);
+                this.to_username = friendInfo.im
+                this.messageData2 = this.messageData[friendInfo.im]
+                // console.log(this.friendInfo)
+                // console.log('to',to.params.id)
+                // console.log('from',from)
             }
         },
         methods:{
@@ -286,7 +295,7 @@
                         let messageData = that.messageData;
                         console.log(messageData);
                         console.log(Boolean(messageData[to_username]));
-
+                        console.log('sendMsg',to_username)
                         if (messageData[to_username]) {
                             messageData[to_username].push(sendMessage)
                         } else {
@@ -387,15 +396,15 @@
         background: #f1f2f6;
     }
     /*.xw-content-textarea{*/
-        /*outline:none;*/
-        /*border:1px solid #ddd;*/
-        /*width:66%;*/
-        /*height: 30px;*/
-        /*!*height: 34px;*!*/
-        /*margin-left:10px;*/
-        /*margin-top:6px;*/
-        /*padding: 3px 15px;*/
-        /*font-size:14px;*/
+    /*outline:none;*/
+    /*border:1px solid #ddd;*/
+    /*width:66%;*/
+    /*height: 30px;*/
+    /*!*height: 34px;*!*/
+    /*margin-left:10px;*/
+    /*margin-top:6px;*/
+    /*padding: 3px 15px;*/
+    /*font-size:14px;*/
     /*}*/
     .chatFile{
         width: 40px;

@@ -49,11 +49,13 @@
         info:{},
         imgUrl:'',
         intrest:'',
-        tag:''
+        tag:'',
+        ip:''
       }
     },
     created(){
       //个人注册传入数据
+      this.ip = this.imageUri;
       let info = JSON.parse(window.localStorage.getItem('loginInfo'))
       this.info = info;
     //  兴趣爱好
@@ -90,7 +92,7 @@
           .then(res=>{
             console.log(res)
             Toast({message:res.data.message, position:top, duration:3000})
-            this.imgUrl = 'http://13.231.212.214/business/image?image='+res.data.data
+            this.imgUrl = this.ip+'/business/image?image='+res.data.data
           })
       },
       doRegister(){
@@ -120,7 +122,7 @@
           var that = this;
           this._$.ajax({
               type:"POST",
-              url:"http://13.231.212.214/business/user/update/"+uid,
+              url:this.ip+"/business/user/update/"+uid,
               data:{'hobbys':hobbit, 'position':tag},
               contentType: 'application/x-www-form-urlencoded;charset=utf-8',
               success:function (res) {

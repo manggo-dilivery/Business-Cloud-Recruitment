@@ -2,39 +2,67 @@
     <div class="pending">
         <topNav title="待处理事项"></topNav>
         <div class="list">
-            <div class="item">
+            <div class="item" v-for="(item,index) in list" :key="index">
                 <div class="left">
-                    <img class="image" src="@/static/image/chat/intel.jpg" alt="">
+                    <img class="image" :src="ip+'/business/image?image='+item.user.portrait" alt="">
                     <div class="text">
-                        <p>英特尔中国<img class="vip" src="@/static/image/chat/v1.png" alt=""></p>
-                        <p>处理内容示例</p>
+                        <p>{{item.user.username}}
+                            <!--<img class="vip" src="@/static/image/chat/v1.png" alt="">-->
+                        </p>
+                        <p>{{item.msg}}</p>
                     </div>
                 </div>
                 <div class="right">
-                    <img src="@/static/image/others/err.png" alt="">
-                    <img src="@/static/image/login/gou.png" alt="">
-                </div>
-            </div>
-            <div class="item">
-                <div class="left">
-                    <img class="image" src="@/static/image/chat/intel.jpg" alt="">
-                    <div class="text">
-                        <p>英特尔中国<img class="vip" src="@/static/image/chat/v1.png" alt=""></p>
-                        <p>处理内容示例</p>
-                    </div>
-                </div>
-                <div class="right">
-                    <img src="@/static/image/others/err.png" alt="">
-                    <img src="@/static/image/login/gou.png" alt="">
+                    <img src="@/static/image/others/err.png" @click="deny(item.user.uid,0)"  alt="">
+                    <img src="@/static/image/login/gou.png" @click="add(item.user.uid,2)"  alt="">
                 </div>
             </div>
         </div>
+        <div id="cometchat_embed_synergy_container" style="width:100%;
+        height: 100%;border:none;display: none"></div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "pending"
+        name: "pending",
+        data(){
+            return{
+                page:1,
+                list:[],
+                ip:'',
+                im:''
+            }
+        },
+        mounted(){
+            this.ip = this.imageUri;
+            let info = JSON.parse(window.localStorage.getItem('loginInfo'));
+            this.im = info.im;
+            this.req(info.im);
+        },
+        methods:{
+            deny(fuid,index){
+                this.req3(fuid,0,index);
+            },
+            add(fuid,index){
+                this.req3(fuid,2,index)
+            },
+            req(im){
+                this.$axios.get('/business/friends/untreated/'+im+'/page?page=1&size=100').then(res=>{
+                    this.list = res.data.data.list;
+                    console.log(res)
+
+                });
+            },
+            req3(fuid,index){
+                this.$axios.post('/business/friends/'+fuid+'/status/'+index).then(res=>{
+                    console.log(res);
+                    this.req(this.im)
+                }).catch(err=>{
+                    console.log(err)
+                })
+            }
+        }
     }
 </script>
 
