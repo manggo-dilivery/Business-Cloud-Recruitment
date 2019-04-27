@@ -98,8 +98,7 @@ let state = {
         {key:'[:-*]', url:ee_21},{key:'[^o)]', url:ee_22},{key:'[8-)]', url:ee_23},{key:'[(|)]', url:ee_24},{key:'[(u)]', url:ee_25},
         {key:'[(S)]', url:ee_26},{key:'[(*)]', url:ee_27},{key:'[(#)]', url:ee_28},{key:'[(R)]', url:ee_29},{key:'[({)]', url:ee_30},
         {key:'[(})]', url:ee_31},{key:'[(k)]', url:ee_32},{key:'[(F)]', url:ee_33},{key:'[(W)]', url:ee_34},{key:'[(D)]', url:ee_35}
-    ],
-    viewMode: 'max'
+    ]
 };
 export default new Vuex.Store({
     state,

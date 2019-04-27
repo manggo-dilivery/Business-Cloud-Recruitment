@@ -29,7 +29,7 @@
                 <p>我的收藏</p>
             </div>
             <span style="width:1px;height: 22px;border-right: 1px solid #fff;"></span>
-            <div class="colItem" @click='goToPay'>
+            <div class="colItem">
                 <img src="@/static/image/chat/money.png" alt="">
                 <p>我的余额</p>
             </div>
@@ -58,18 +58,6 @@
                     <div class="itemLeft">
                         <img src="@/static/image/chat/link.png" alt="">
                         <p>个人主页</p>
-                    </div>
-                    <div class="itemRight">
-                        <!--<p>IT/互联网，产品设计带带</p>-->
-                        <img src="@/static/image/chat/iconRight.png" alt="">
-                    </div>
-                </div>
-            </router-link>
-            <router-link :to="{name:'companyPage'}">
-                <div class="item">
-                    <div class="itemLeft">
-                        <img src="@/static/image/chat/link.png" alt="">
-                        <p>公司主页</p>
                     </div>
                     <div class="itemRight">
                         <!--<p>IT/互联网，产品设计带带</p>-->
@@ -129,18 +117,9 @@
         <div class="work">
             <div class="item">
                 <div class="itemLeft">
-                    <p>教育经历</p>
-                </div>
-                <div class="itemRight" @click="$router.push('/education')" style="cursor:pointer;">
-                    <p>添加教育经历</p>
-                    <img src="@/static/image/chat/iconRight.png" alt="">
-                </div>
-            </div>
-            <div class="item">
-                <div class="itemLeft">
                     <p>工作经历</p>
                 </div>
-                <div class="itemRight" @click="goToWork" style="cursor:pointer;">
+                <div class="itemRight">
                     <p>添加工作经历</p>
                     <img src="@/static/image/chat/iconRight.png" alt="">
                 </div>
@@ -195,12 +174,6 @@
                 }else{
                     this.$router.push('/loginInfo')
                 }
-            },
-            goToPay(){
-                this.$router.push('/globalpay')
-            },
-            goToWork(){
-                this.$router.push('/work')
             }
         }
     }

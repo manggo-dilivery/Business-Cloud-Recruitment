@@ -59,17 +59,11 @@
                 <Introduct></Introduct>
             </div>
             <div class="tag">
-                <p class="introductionTitle" @click="$router.push('/goal')">公司目标</p>
+                <p class="introductionTitle">公司目标</p>
                 <Tag></Tag>
             </div>
             <div class="tag">
-                <p class="introductionTitle" @click="$router.push('/childaccounts')">子账户</p>
-            </div>
-            <div class="tag">
-                <p class="introductionTitle" @click="$router.push('/globalcpay')">企业账户充值</p>
-            </div>
-            <div class="tag">
-                <p class="tabTag" @click="$router.push('/recruitlist')"><span>我招聘的职位</span><span style="display: flex;align-items: center">更多<img style="width:7px;margin-left:6px;" src="@/static/image/chat/iconRight.png"/></span></p>
+                <p class="tabTag"><span>我招聘的职位</span><span style="display: flex;align-items: center">更多<img style="width:7px;margin-left:6px;" src="@/static/image/chat/iconRight.png"/></span></p>
                 <div class="jobContent">
                     <div class="jobBorder">
                         <div class="jobList">
@@ -160,7 +154,10 @@
                     });
                 },
                 shoucang(){
-                    this.$router.push('/mycollection');
+                    MessageBox.confirm('确定执行此操作?').then(action => {
+                        // console.log(this.friendsInfo)
+
+                    });
                 },
                 jubao(){
                     MessageBox.confirm('确定执行此操作?').then(action => {

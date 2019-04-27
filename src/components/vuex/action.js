@@ -58,8 +58,5 @@ const actions = {
     setGroupOnMount(context,groupData){
         context.state.groupData = groupData;
     },
-    setViewMode({commit}, mode) {
-        commit('setViewMode', mode);
-    }
 }
 export default actions

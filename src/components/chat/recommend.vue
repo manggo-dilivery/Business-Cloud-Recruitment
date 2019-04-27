@@ -1,16 +1,15 @@
 <template>
     <div class="recommend">
-        <topNav title="推荐" style="z-index: 10"></topNav>
+        <topNav title="推荐"></topNav>
         <div style="height:41px"></div>
         <div id="photo_box">
             <div><div>
             </div></div>
         </div>
         <div class="option">
-            <img id="a2" style="border-radius: 50%" src="@/static/image/chat/a2.png" alt="">
+            <img id="a2" src="@/static/image/chat/a2.png" alt="">
             <img id="a1" src="@/static/image/chat/a1.png" alt="">
         </div>
-
     </div>
 </template>
 
@@ -64,53 +63,16 @@
                     var index = this.index;
                     var list = this.list;
                     // console.log(list)
-                    var str=`<div id="ind-${index}" style="border:1px solid #eee;width:330px;top:60px;left:50%;margin-left:-165px;cursor:pointer;border-radius:10px;
-                        box-shadow:0 0 10px #eee;position: absolute;background: #fff;margin-bottom:110px;padding-bottom:20px;">`
-                        +`<img style='position: absolute;top:0;width:100%;height:100px;display:block;border-radius:10px;filter:blur(10px)' src='${ip}/business/image?image=${list[index].portrait}'>`
-                        +`<img style='width:50px;height:50px;position:absolute;top:30px;left:50%;margin-left:-25px;' src='${ip}/business/image?image=${list[index].portrait}'>`
-                            +'<div style="margin-top:110px;">'
-                                +'<p style="width:90%;margin:0 auto;font-size:15px;padding:5px 0;border-bottom:1px solid #eee">目标</p>'
-                                +'<div style="width:90%;margin:0 auto;display:flex;margin-top:10px;flex-wrap: wrap">'
-                                     +'<p style="font-size:11px;padding:3px 10px;background:#eee;border-radius:4px;border:1px solid #ddd;margin:5px 10px;">生活服务</p>'
-                                     +'<p style="font-size:11px;padding:3px 10px;background:#eee;border-radius:4px;border:1px solid #ddd;margin:5px 10px;">生活服务</p>'
-                                     +'<p style="font-size:11px;padding:3px 10px;background:#eee;border-radius:4px;border:1px solid #ddd;margin:5px 10px;">生活服务</p>'
+                    var str=`<div id="ind-${index}" style="border:1px solid #eee;width:300px;top:60px;left:50%;margin-left:-150px;cursor:pointer;border-radius:10px;box-shadow:0 0 10px #eee;position: absolute;background: #fff">`
+                        +`<img style='width:100%;height:300px;display:block;border-radius:10px;' src='${ip}/business/image?image=${list[index].portrait}'>`
+                            +'<div style="width: 90%;margin:0 auto">'
+                                 +`<h4 style="color:#0094ff;font-size:16px;margin:5px 0">${list[index].username}</h4>`
+                                +'<div style="display: flex">'
+                                    +'<p style="background:#0094ff;border-radius:5px;padding:1px 6px;color:#fff;font-size:12px">英雄联盟</p>'
+                                    +'<p style="background:#cf4917;border-radius:5px;padding:1px 6px;color:#fff;margin-left:5px;font-size:12px">生活服务</p>'
+                                    +'<p style="background:#f6ba3f;border-radius:5px;padding:1px 6px;color:#fff;margin-left:5px;font-size:12px">电子商务</p>'
                                 +'</div>'
-                            +'</div>'
-                            +'<div style="margin-top:10px;">'
-                                +'<p style="width:90%;margin:0 auto;font-size:15px;padding:5px 0;border-bottom:1px solid #eee">感兴趣话题</p>'
-                                +'<div style="width:90%;margin:0 auto;display:flex;margin-top:10px;flex-wrap: wrap">'
-                                    +'<p style="font-size:11px;padding:3px 10px;background:#eee;border-radius:4px;border:1px solid #ddd;margin:5px 10px;">生活服务</p>'
-                                    +'<p style="font-size:11px;padding:3px 10px;background:#eee;border-radius:4px;border:1px solid #ddd;margin:5px 10px;">生活服务</p>'
-                                    +'<p style="font-size:11px;padding:3px 10px;background:#eee;border-radius:4px;border:1px solid #ddd;margin:5px 10px;">生活服务</p>'
-                                +'</div>'
-                            +'</div>'
-                            +'<div style="margin-top:10px;">'
-                                +'<p style="width:90%;margin:0 auto;font-size:15px;padding:5px 0;border-bottom:1px solid #eee">所在行业</p>'
-                                +'<div style="width:90%;margin:0 auto;display:flex;margin-top:10px;flex-wrap: wrap">'
-                                    +'<p style="font-size:11px;padding:3px 10px;background:#eee;border-radius:4px;border:1px solid #ddd;margin:5px 10px;">生活服务</p>'
-                                    +'<p style="font-size:11px;padding:3px 10px;background:#eee;border-radius:4px;border:1px solid #ddd;margin:5px 10px;">生活服务</p>'
-                                    +'<p style="font-size:11px;padding:3px 10px;background:#eee;border-radius:4px;border:1px solid #ddd;margin:5px 10px;">生活服务</p>'
-                                +'</div>'
-                            +'</div>'
-                            +'<div style="margin-top:10px;">'
-                                +'<p style="width:90%;margin:0 auto;font-size:15px;padding:5px 0;border-bottom:1px solid #eee">工作经历</p>'
-                                +'<div style="width:90%;margin:0 auto;margin-top:10px;">'
-                                    +'<p style="font-size:14px;margin:5px 0;font-weight:bold;color:#666">杭州阿里巴巴有限公司</p>'
-                                    +'<p style="font-size:10px;color:#888">2010-至今 运营总监</p>'
-                                    +'<p style="font-size:10px;color:#888">工作内容/方向 互联网电商</p>'
-                                +'</div>'
-                            +'</div>'
-                            +'<div style="margin-top:10px;">'
-                                +'<p style="width:90%;margin:0 auto;font-size:15px;padding:5px 0;border-bottom:1px solid #eee">教育经历</p>'
-                                +'<div style="width:90%;margin:0 auto;margin-top:10px;display:flex;">'
-                                    +'<img style="width:50px;height:50px;border-radius:50%;" src="http://52.69.229.171/business/image?image=201901240839055942.png">'
-                                    +'<div style="margin-left:10px;">'
-                                        +'<p style="font-size:14px;margin:5px 0;font-weight:bold;color:#666">南京大学</p>'
-                                        +'<p style="font-size:10px;color:#888">2012/9-2015/6 研究生</p>'
-                                        +'<p style="font-size:10px;color:#888">专业广告学</p>'
-                                    +'</div>'
-                                +'</div>'
-                            +'</div>'
+                            +`<p style="margin-top:8px;height: 120px;overflow: hidden">${list[index].hobbys}</p>`
                         +'</div>';
                     return str;
                 },
@@ -189,10 +151,10 @@
                 photoSwipe._y_move=ev.touches[0].pageY;
 
                 var act_el=$("#ind-"+(photoSwipe.index-1).toString(10));
-                // photoSwipe.top_val=parseFloat(photoSwipe._y_move)-parseFloat(photoSwipe._y_start);
+                photoSwipe.top_val=parseFloat(photoSwipe._y_move)-parseFloat(photoSwipe._y_start);
                 photoSwipe.left_val=parseFloat(photoSwipe._x_move)-parseFloat(photoSwipe._x_start);
-                // console.log(photoSwipe.left_val)
-                act_el.css({"transform":"translateX("+photoSwipe.left_val+"px)","transition-duration":"0s"});
+
+                act_el.css({"transform":"translate3d("+photoSwipe.left_val+"px,"+photoSwipe.top_val+"px,0px)","transition-duration":"0s"});
             });
             $("#photo_box").on("mousemove",function(e) {
                 if(!photoSwipe.load || !photoSwipe.run){
@@ -222,12 +184,11 @@
                 photoSwipe._x_end=ev.changedTouches[0].pageX;
                 photoSwipe._y_end=ev.changedTouches[0].pageY;
                 var act_el=$("#ind-"+(photoSwipe.index-1).toString(10));
-                // console.log(xchange)
-                // console.log('act_el',act_el)
-                if(photoSwipe.left_val>100&&-50<photoSwipe.top_val<50){
+                console.log('act_el',act_el)
+                if(photoSwipe.left_val>0 && photoSwipe.left_val>doc_width/2-doc_width/4.5){
                     that.toast()
                     photoSwipe.animateMove(act_el,1);
-                }else if(photoSwipe.left_val<-100&&-50<photoSwipe.top_val<50){
+                }else if(photoSwipe.left_val<0 && photoSwipe.left_val<-doc_width/2+doc_width/4.5){
                     that.toast2()
                     photoSwipe.animateMove(act_el,-1);
                 }else {
@@ -256,13 +217,14 @@
                 }
             });
             $("#a1").on("click",function (e) {
+                // var ev = e || window.event;
+                // photoSwipe._x_end=ev.changedTouches[0].pageX;
+                // photoSwipe._y_end=ev.changedTouches[0].pageY;
                 var act_el=$("#ind-"+(photoSwipe.index-1).toString(10));
-                act_el.css({"transform":"translateX(200px)","transition-duration":"0s"});
                 photoSwipe.animateMove(act_el,1);
             })
             $("#a2").on("click",function () {
                 var act_el=$("#ind-"+(photoSwipe.index-1).toString(10));
-                act_el.css({"transform":"translateX(-200px)","transition-duration":"0s"});
                 photoSwipe.animateMove(act_el,-1);
             })
             $(function () {
@@ -273,14 +235,14 @@
             toast(){
                 Toast({
                     message: '收藏成功',
-                    duration: 500
+                    duration: 5000
                 });
                 console.log('2323423')
             },
             toast2(){
                 Toast({
                     message: '取消成功',
-                    duration: 500
+                    duration: 5000
                 });
                 console.log('2323423')
             }
@@ -294,11 +256,10 @@
 
 <style scoped>
     .option{
-        position: fixed;
+        position: absolute;
         top:550px;
         left:50%;
         margin-left:-60px;
-        z-index:10
     }
     .option img{
         height: 50px;

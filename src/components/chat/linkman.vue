@@ -124,9 +124,8 @@
         display: flex;
         align-items: center;
         width:calc(100% - 21px);
-        margin:0 auto;
         border-bottom:1px solid #ddd;
-        /*border-right:1px solid #ddd;*/
+        border-right:1px solid #ddd;
     }
     .topItem img{
         width:36px;

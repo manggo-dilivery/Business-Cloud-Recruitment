@@ -118,7 +118,6 @@
             // if(chatData[query.from]){ this.chatHistory = chatData[query.from]}
 
             this.from_username = userInfo.im;
-            console.log('userInfo',query)
             this.to_username = query.im;
             this.messageData2 = this.messageData[query.im]
             this.password = userInfo.password;
@@ -142,7 +141,7 @@
             '$route' (to, from) {
                 // 对路由变化作出响应...
                 let friendInfo = JSON.parse(to.params.id);
-                this.to_username = friendInfo.im
+                console.log(friendInfo)
                 this.messageData2 = this.messageData[friendInfo.im]
                 // console.log(this.friendInfo)
                 // console.log('to',to.params.id)
@@ -295,7 +294,7 @@
                         let messageData = that.messageData;
                         console.log(messageData);
                         console.log(Boolean(messageData[to_username]));
-                        console.log('sendMsg',to_username)
+
                         if (messageData[to_username]) {
                             messageData[to_username].push(sendMessage)
                         } else {

@@ -23,10 +23,6 @@ const mutations = {
         }else{
             Vue.set(state.groupData, receiveMessage.id, [receiveMessage])
         }
-    },
-    setViewMode(state, mode){
-        state.viewMode = mode;
     }
-    
 }
 export default mutations

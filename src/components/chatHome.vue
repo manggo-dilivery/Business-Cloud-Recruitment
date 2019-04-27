@@ -1,12 +1,13 @@
 <template>
     <div class="chatHome" style="height: 100%;">
+
         <router-view></router-view>
         <div style="background:#ffffff">
-            <mu-bottom-nav :value="bottomValue" @change="handleChange">
-                <mu-bottom-nav-item title="消息" icon=":iconfont icon-xiaoxi" to="/message" value="/message"></mu-bottom-nav-item>
-                <mu-bottom-nav-item title="好友" icon=":iconfont icon-lianxiren" to="/linkman" value="/linkman"></mu-bottom-nav-item>
-                <mu-bottom-nav-item title="动态" icon=":iconfont icon-dongtai" to="/dynamics" value="/dynamics"></mu-bottom-nav-item>
-                <mu-bottom-nav-item title="我的" icon=":iconfont icon-iconfuzhi" to="/center" value="/center"></mu-bottom-nav-item>
+            <mu-bottom-nav>
+                <mu-bottom-nav-item :replace="true" title="消息" icon=":iconfont icon-xiaoxi" to="/message"></mu-bottom-nav-item>
+                <mu-bottom-nav-item :replace="true" title="好友" icon=":iconfont icon-lianxiren" to="/linkman"></mu-bottom-nav-item>
+                <mu-bottom-nav-item :replace="true" title="动态" icon=":iconfont icon-dongtai" to="/animated"></mu-bottom-nav-item>
+                <mu-bottom-nav-item :replace="true" title="我的" icon=":iconfont icon-iconfuzhi" to="/center"></mu-bottom-nav-item>
             </mu-bottom-nav>
         </div>
 
@@ -22,19 +23,17 @@
             return{
                 selected:'message',
                 loginInfo:{},
-                bottomValue: '/message'
             }
         },
         mounted(){
-            // let aa = localStorage.getItem("loginInfo")
-            // aa = JSON.parse(aa)||{};
-            // console.log('aa.im',aa.im);
-            // if(aa.im){
-            //     this.$router.push({path:'/'});
-            // }else{
-            //     this.$router.push({path:'/registerOption'});
-            // }
-
+            let aa = localStorage.getItem("loginInfo")
+            aa = JSON.parse(aa)||{};
+            console.log('aa.im',aa.im);
+            if(aa.im){
+                this.$router.push({path:'/'});
+            }else{
+                this.$router.push({path:'/registerOption'});
+            }
             // let pop = JSON.parse(window.localStorage.getItem('popInfo'))||{};
             // let title = "立即完善信息?";
             // let message="确定执行此操作?";
@@ -54,17 +53,22 @@
         },
         // props:['bottomIndex'],
         methods:{
-            handleChange (value) {
-                this.bottomValue = value
+            toMessage(){
+                this.$router.push({path:'/message'})
+                // window.localStorage.setItem('selected',this.selected)
+            },
+            toLinkman(){
+                this.$router.push({path:'/linkman'})
+                // window.localStorage.setItem('selected',this.selected)
+            },
+            toAnimate(){
+                this.$router.push({path:'/animated'})
+                // window.localStorage.setItem('selected',this.selected)
+            },
+            toCenter(){
+                this.$router.push({path:'/center'})
+                // window.localStorage.setItem('selected',this.selected)
             }
-        },
-        mounted(){
-            setTimeout(()=>{
-                this.bottomValue = this.$router.history.current.path;
-                if (this.bottomValue === '/dynamicsall') {
-                    this.bottomValue = '/dynamics'
-                }
-            })
         }
     }
 </script>
